@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-icon">📦</span>
+                    <span class="logo-text">InvHub</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-section="dashboard">
+                    <span class="nav-icon">📊</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-section="inventory">
+                    <span class="nav-icon">📦</span>
+                    <span>Inventory</span>
+                </a>
+                <a href="#" class="nav-item" data-section="add-product">
+                    <span class="nav-icon">➕</span>
+                    <span>Add Product</span>
+                </a>
+                <a href="#" class="nav-item" data-section="reports">
+                    <span class="nav-icon">📈</span>
+                    <span>Reports</span>
+                </a>
+                <a href="#" class="nav-item" data-section="settings">
+                    <span class="nav-icon">⚙️</span>
+                    <span>Settings</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <h1 id="page-title">Dashboard</h1>
+                </div>
+                <div class="header-right">
+                    <div class="search-box">
+                        <input type="text" id="search-input" placeholder="Search products...">
+                        <span class="search-icon">🔍</span>
+                    </div>
+                    <button class="btn-icon" title="Notifications">🔔</button>
+                    <button class="btn-icon" title="User Profile">👤</button>
+                </div>
+            </header>
+
+            <!-- Content Sections -->
+            <div class="content">
+                <!-- Dashboard Section -->
+                <section id="dashboard" class="section active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">📦</div>
+                            <div class="stat-content">
+                                <div class="stat-label">Total Products</div>
+                                <div class="stat-value" id="total-products">0</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">⚠️</div>
+                            <div class="stat-content">
+                                <div class="stat-label">Low Stock</div>
+                                <div class="stat-value" id="low-stock">0</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">💰</div>
+                            <div class="stat-content">
+                                <div class="stat-label">Total Value</div>
+                                <div class="stat-value" id="total-value">$0</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">📊</div>
+                            <div class="stat-content">
+                                <div class="stat-label">Categories</div>
+                                <div class="stat-value" id="total-categories">0</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="card">
+                            <h3>Recent Products</h3>
+                            <div id="recent-products" class="product-list"></div>
+                        </div>
+                        <div class="card">
+                            <h3>Stock Status</h3>
+                            <div id="stock-status" class="stock-chart"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Inventory Section -->
+                <section id="inventory" class="section">
+                    <div class="section-header">
+                        <h2>Inventory Management</h2>
+                        <div class="filter-controls">
+                            <select id="category-filter" class="filter-select">
+                                <option value="">All Categories</option>
+                            </select>
+                            <select id="stock-filter" class="filter-select">
+                                <option value="">All Stock Levels</option>
+                                <option value="low">Low Stock</option>
+                                <option value="medium">Medium Stock</option>
+                                <option value="high">High Stock</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="inventory-table">
+                            <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th>SKU</th>
+                                    <th>Category</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Price</th>
+                                    <th>Total Value</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inventory-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Add Product Section -->
+                <section id="add-product" class="section">
+                    <div class="card">
+                        <h2>Add New Product</h2>
+                        <form id="product-form" class="form">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="product-name">Product Name *</label>
+                                    <input type="text" id="product-name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="product-sku">SKU *</label>
+                                    <input type="text" id="product-sku" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="product-category">Category *</label>
+                                    <input type="text" id="product-category" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="product-quantity">Quantity *</label>
+                                    <input type="number" id="product-quantity" min="0" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="product-price">Unit Price *</label>
+                                    <input type="number" id="product-price" min="0" step="0.01" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="product-min-stock">Min Stock Level *</label>
+                                    <input type="number" id="product-min-stock" min="0" required>
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="product-description">Description</label>
+                                    <textarea id="product-description" rows="4"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Add Product</button>
+                                <button type="reset" class="btn btn-secondary">Clear</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Reports Section -->
+                <section id="reports" class="section">
+                    <div class="section-header">
+                        <h2>Inventory Reports</h2>
+                    </div>
+                    <div class="reports-grid">
+                        <div class="card">
+                            <h3>Low Stock Items</h3>
+                            <div id="low-stock-report" class="report-content"></div>
+                        </div>
+                        <div class="card">
+                            <h3>Top Products by Value</h3>
+                            <div id="top-products-report" class="report-content"></div>
+                        </div>
+                        <div class="card">
+                            <h3>Category Distribution</h3>
+                            <div id="category-report" class="report-content"></div>
+                        </div>
+                        <div class="card">
+                            <h3>Inventory Summary</h3>
+                            <div id="summary-report" class="report-content"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Settings Section -->
+                <section id="settings" class="section">
+                    <div class="card">
+                        <h2>Settings</h2>
+                        <div class="settings-group">
+                            <h3>Data Management</h3>
+                            <div class="settings-item">
+                                <div>
+                                    <p class="setting-label">Export Data</p>
+                                    <p class="setting-description">Download all inventory data as CSV</p>
+                                </div>
+                                <button class="btn btn-secondary" id="export-btn">Export CSV</button>
+                            </div>
+                            <div class="settings-item">
+                                <div>
+                                    <p class="setting-label">Import Data</p>
+                                    <p class="setting-description">Import products from CSV file</p>
+                                </div>
+                                <input type="file" id="import-file" accept=".csv" style="display: none;">
+                                <button class="btn btn-secondary" id="import-btn">Import CSV</button>
+                            </div>
+                            <div class="settings-item">
+                                <div>
+                                    <p class="setting-label">Clear All Data</p>
+                                    <p class="setting-description">Remove all products (cannot be undone)</p>
+                                </div>
+                                <button class="btn btn-danger" id="clear-btn">Clear Data</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal for Edit Product -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Product</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="edit-form" class="form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="edit-product-name">Product Name</label>
+                        <input type="text" id="edit-product-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-product-sku">SKU</label>
+                        <input type="text" id="edit-product-sku" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-product-category">Category</label>
+                        <input type="text" id="edit-product-category" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-product-quantity">Quantity</label>
+                        <input type="number" id="edit-product-quantity" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-product-price">Unit Price</label>
+                        <input type="number" id="edit-product-price" min="0" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-product-min-stock">Min Stock Level</label>
+                        <input type="number" id="edit-product-min-stock" min="0" required>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="button" class="btn btn-secondary" id="cancel-edit">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
